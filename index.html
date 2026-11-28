@@ -499,6 +499,108 @@ body.dock-on{padding-bottom:calc(var(--dockH,72px) + 24px)}
 .tome-ink{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden;color:var(--inkblot);opacity:var(--notes-alpha,.18)}
 .tome-ink svg{display:block;width:100%}
 .panel,.tome-page .mapbox{background:color-mix(in srgb,var(--surface) 90%,transparent)}
+
+
+/* Chord explorer: two steps instead of one wall of buttons */
+.xpick{display:grid;gap:16px;grid-template-columns:minmax(0,3fr) minmax(0,2fr);align-items:start}
+body:not([data-inst="guitar"]) .xpick{grid-template-columns:minmax(0,1fr)}
+.xstep{display:grid;gap:14px;align-content:start;padding:14px 16px 16px;border:1px solid var(--line);border-radius:4px;background:color-mix(in srgb,var(--surface) 70%,transparent)}
+.xstep>*{min-width:0}
+.xh{font-size:20px;display:flex;align-items:center;gap:8px;margin:0}
+.xn{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font:700 14px/1 var(--body)}
+.qrow{display:grid;gap:4px}
+.qcap{font-size:13px;color:var(--muted)}
+.xmore{margin-top:4px}
+#explorer:has(.songctx[data-ctx="lens"]:not(:empty)) #quickGrp{display:none}
+@media (max-width:760px){.xpick{grid-template-columns:minmax(0,1fr)}}
+
+/* Play bar: what you press most on top, options below in a quieter row */
+.transport{display:grid;gap:10px;padding:12px 14px}
+.trow{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
+.tmain #sbPlay{font-size:16px;padding:11px 18px}
+.topts{gap:6px 16px;padding-top:10px;border-top:1px solid var(--line);font-size:14px;color:color-mix(in srgb,var(--ink) 85%,var(--bg))}
+.topts .tfld{font-size:14px}
+.topt-cap{margin-right:2px}
+.topt-sub{font-size:13px;color:var(--muted)}
+.topts .band{border:0;padding:0;gap:10px}
+@media (max-width:560px){.tmain .tfld{font-size:14px}.topts{gap:6px 12px}.topt-cap{flex-basis:100%}}
+
+/* Phone tidy-ups (v58) */
+#sbKeyLabel>.keysub::before{content:"· "}
+@media (max-width:560px){
+  #sbKeyLabel{display:grid;gap:2px}#sbKeyLabel>.keysub::before{content:none}
+  #sbDurRow{padding:10px}#sbDurRow .durrow{gap:5px}#sbDurRow .chip{padding:7px 8px;font-size:13.5px;min-width:0}
+  #sbDurRow .durlab{flex-basis:100%;min-width:0}#sbDurRow .durrow>.durlab:not(:first-child){display:none}
+  #sbDurRow .durx{display:none}#sbDurRow .tin.num{width:64px}
+}
+
+/* Guided tour (v59) */
+.tour{z-index:95;width:min(350px,calc(100vw - 24px));pointer-events:auto}
+.tour:focus{outline:none}
+.tour .bloom-acts button{pointer-events:auto}
+.tour .tour-h{margin:0 0 6px;font:700 22px/1.15 var(--display);color:var(--ink)}
+.tour p{font:400 15.5px/1.45 var(--body);font-style:normal;margin:0 0 12px}
+.tour .tour-n{display:block;font:600 11.5px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.tour .tour-quit{background:transparent!important;border-color:transparent!important;text-decoration:underline;color:var(--muted)!important}
+.tour.float{position:fixed;transform:none}
+.tour.center{position:fixed;left:max(12px,calc(50% - 175px));top:22vh}
+.tour.corner{position:fixed;right:24px;bottom:24px}
+body.dock-on .tour.corner{bottom:calc(var(--dockH,72px) + 30px)}
+.tour.sheet{position:fixed;left:10px;right:10px;width:auto;top:auto;bottom:calc(12px + env(safe-area-inset-bottom));padding:18px 22px 16px}
+body.dock-on .tour.sheet{bottom:calc(var(--dockH,72px) + 22px)}
+.tour.sheet .tour-h{font-size:20px}.tour.sheet p{font-size:15px;margin-bottom:10px}
+.tour-target{outline:3px solid var(--accent)!important;outline-offset:4px;border-radius:4px;animation:tourPulse 1.6s ease-in-out infinite}
+.tour{padding:30px 38px 26px}
+body.tour-dim::after{content:"";position:fixed;inset:0;z-index:94;background:color-mix(in srgb,var(--bg) 55%,transparent);backdrop-filter:blur(1.5px);pointer-events:none}
+.tour.sheet{background:color-mix(in srgb,var(--surface) 97%,transparent);border:1px solid var(--line);border-top:4px solid #E8336D;border-radius:12px;box-shadow:0 12px 34px rgba(0,0,0,.28);overflow:hidden;padding:14px 18px 12px}
+.tour.sheet .bloom-paint{inset:0;width:100%;height:100%;opacity:.28}
+.tour.sheet .tour-h{font-size:19px;margin-bottom:4px}.tour.sheet p{font-size:14.5px;margin-bottom:10px}
+@keyframes tourPulse{50%{outline-color:color-mix(in srgb,var(--accent) 30%,transparent)}}
+.tourpanel{display:grid;gap:8px;padding:16px;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:4px;background:var(--surface);margin:6px 0 14px;transition:box-shadow .4s}
+.tourpanel.tour-flash{box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 35%,transparent)}
+.tourtop{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;justify-content:space-between}
+.tourlist{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.tourrow{display:grid;grid-template-columns:auto minmax(0,1fr) 22px;gap:12px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}
+.tourrow:first-child{border-top:0}
+.tourrow .btn{min-width:72px}
+.tourblurb{color:var(--muted);font-size:14px}
+.tourtick{color:var(--t5);font-weight:700;font-size:18px;text-align:center}
+@media (max-width:560px){.tourblurb{display:block}}
+@media (prefers-reduced-motion:reduce){.tour-target{animation:none}.tour{animation:none}}
+/* ---- Hierarchy pass (v56): four levels. Page title (h2) > panel title (.h3) > group heading (.ghead) > field caption (.lbl). Suggestions are dashed "ghost" boxes so they never read as the song's own chords. ---- */
+.ghead{font:600 18px/1.25 var(--body);color:var(--ink);margin:6px 0 0;letter-spacing:0;text-transform:none}
+.ghead small{font-weight:400;font-size:14px;color:var(--muted);margin-left:6px}
+.lbl{font-size:11.5px;color:color-mix(in srgb,var(--muted) 80%,var(--ink))}
+.opt{background:transparent;border:1px dashed color-mix(in srgb,var(--ink) 32%,transparent);transition:background .12s,border-color .12s}
+.opt:hover,.opt:focus-visible{background:var(--surface);border-style:solid;border-color:var(--accent)}
+.opt .ohead{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.obadge{font:600 11px/1 var(--body);letter-spacing:.04em;padding:3px 6px;border-radius:3px;border:1px solid currentColor;color:var(--t5)}
+.obadge.best{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.labintro{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;justify-content:space-between}
+.labintro .hint{flex:1 1 320px}
+.labconn{font-size:13.5px;display:inline-flex;gap:6px;align-items:center;white-space:nowrap}
+#sbLabPanel:not(.showconn) .opt .ctxtags{display:none}
+.labtabs{display:none;gap:4px;border-bottom:1px solid var(--line)}
+.labtab{flex:1 1 0;font:600 15px/1.15 var(--body);color:var(--muted);background:transparent;border:1px solid transparent;border-bottom:3px solid transparent;border-radius:6px 6px 0 0;padding:9px 4px 7px;cursor:pointer;min-height:44px}
+.labtab[aria-selected="true"]{color:var(--ink);background:var(--surface);border-color:var(--line);border-bottom-color:var(--accent)}
+.labtab small{display:block;font-weight:400;font-size:12px;color:var(--muted)}
+.labcols{display:grid;gap:14px;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start}
+.labcol{display:grid;gap:8px;align-content:start;min-width:0;padding:12px;border-radius:4px;background:color-mix(in srgb,var(--bg) 55%,transparent);border-top:3px solid var(--line)}
+.labcol[data-mode="replace"]{border-top-color:var(--accent);background:color-mix(in srgb,var(--accent) 5%,var(--bg))}
+.labcol .opts{grid-template-columns:1fr}
+.labhead{display:grid;gap:3px}
+.labhead .ghead{margin:0;font-size:19px}
+.labhead .labwhat{font-size:13.5px;color:var(--muted)}
+.labmini{display:flex;flex-wrap:wrap;align-items:center;gap:4px;font:600 14px/1 var(--body);margin-top:2px}
+.labmini span{padding:4px 7px;border-radius:3px;border:1px solid var(--line);background:var(--surface)}
+.labmini .cur{border-color:var(--accent);color:var(--accent)}
+.labmini .gone{text-decoration:line-through;color:var(--muted)}
+.labmini .new{border:1px dashed var(--accent);color:var(--accent);background:transparent;font-style:italic;font-weight:500}
+.labmini .edge{border:0;background:none;color:var(--muted);font-weight:400;font-style:italic;padding:4px 0}
+.labmini i{font-style:normal;color:var(--muted)}
+.labmore{justify-self:start}
+@media (max-width:560px){#sbLabTitle{font-size:24px}}
+@media (max-width:899px){.labtabs{display:flex}.labcols{grid-template-columns:1fr}.labcol,.labcol[data-mode]{display:none;background:none;border-top:0;padding:4px 0 0}.labcol.on{display:grid}.labcol .labhead .ghead{font-size:18px}}
 </style>
 <div class="wrap">
   <header>
@@ -507,9 +609,9 @@ body.dock-on{padding-bottom:calc(var(--dockH,72px) + 24px)}
 <rect class="kleg kl1" x="42" y="66" width="7" height="26" rx="3.5"/><rect class="kleg kl2" x="51" y="66" width="7" height="26" rx="3.5"/><rect class="kleg kl2" x="80" y="66" width="7" height="26" rx="3.5"/><rect class="kleg kl1" x="89" y="66" width="7" height="26" rx="3.5"/></g>
 <g class="ksit"><path d="M86 88 C106 87 113 70 104 58 C101 54 96 56 99 60 C104 68 100 79 86 80 Z"/><path d="M58 94 C40 94 36 74 43 62 C49 51 67 47 79 52 C93 59 96 80 90 94 Z"/><circle cx="50" cy="42" r="16"/><path d="M36 37 L37 18 L49 29 Z"/><path d="M53 28 L63 15 L65 33 Z"/><rect x="47" y="84" width="11" height="10" rx="5"/><g class="kpaw"><path d="M54 60 C44 55 32 50 23 47 C17 45 15 53 20 55 C30 59 42 64 52 68 Z"/><circle cx="20" cy="51" r="5.5"/></g></g>
 </svg></span></span></h1><p class="tome-sub">A tome for composition</p></div></div>
-    <div class="row" style="gap:10px;align-items:center;margin-top:10px"><span class="tome-play" style="margin-top:0">Playground copy: restyle experiments only. Your real songs are not here.</span><button class="btn" id="tomeTheme" type="button" aria-pressed="false">Night pages</button><button class="btn" id="hintsBtn" type="button" title="Show the first-use hints again">Show hints</button></div>
+    <div class="row" style="gap:10px;align-items:center;margin-top:10px"><span class="tome-play" style="margin-top:0">Playground copy: restyle experiments only. Your real songs are not here.</span><button class="btn" id="tomeTheme" type="button" aria-pressed="false">Night pages</button><button class="btn" id="tourBtn" type="button" title="The guided tour and its chapters">Tour</button></div>
     <div class="row" style="gap:8px;align-items:center;margin-top:8px"><span class="lbl" style="margin:0">Instrument view</span><div class="row" id="instPick" style="gap:6px"></div></div>
-<script>/* first run only: a demo song so there is something to play with */try{if(!localStorage.getItem('atlasSongs')&&!localStorage.getItem('tomeSeeded')){const now=Date.now();localStorage.setItem('atlasSongs',JSON.stringify({demo_song:{title:'Demo: Am F C G',created:now,updated:now,tempo:90,beats:4,sections:[{id:'demo_v',name:'Verse',prog:'Am F C G',home:'auto',mode:'auto',loop:true},{id:'demo_c',name:'Chorus',prog:'F G Em Am',home:'auto',mode:'auto',loop:true}],form:['demo_v','demo_c','demo_v','demo_c']}}));}localStorage.setItem('tomeSeeded','1');}catch(e){}</script>
+<script>/* first run only: flag it so the guided tour starts */try{if(!localStorage.getItem('tomeSeeded')){window.TOME_FIRST_RUN=true;localStorage.setItem('tomeSeeded','1');}}catch(e){}</script>
 <script>(function(){var t="light";try{t=localStorage.getItem("tomeTheme")||"light"}catch(e){}document.documentElement.setAttribute("data-theme",t);var b=document.getElementById("tomeTheme");function sync(){var d=document.documentElement.getAttribute("data-theme")==="dark";b.setAttribute("aria-pressed",String(d));b.textContent=d?"Day pages":"Night pages";}sync();b.onclick=function(){var n=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";document.documentElement.setAttribute("data-theme",n);try{localStorage.setItem("tomeTheme",n)}catch(e){}sync();};})();</script>
   </header>
   <nav class="tome-tabs" id="tomeTabs" aria-label="Pages of the tome"><button type="button" class="tome-tab" data-page="folio" aria-pressed="false"><span class="tome-num">I</span> Composition</button><button type="button" class="tome-tab" data-page="lens" aria-pressed="false"><span class="tome-num">II</span> Chord explorer</button><button type="button" class="tome-tab" data-page="prog" aria-pressed="false"><span class="tome-num">III</span> Progression path</button><button type="button" class="tome-tab" data-page="scales" aria-pressed="false"><span class="tome-num">IV</span> Soloing scales</button><button type="button" class="tome-tab" data-page="finder" aria-pressed="false"><span class="tome-num">V</span> Chord finder</button><button type="button" class="tome-tab" data-page="practice" aria-pressed="false"><span class="tome-num">VI</span> How-to</button></nav>
@@ -566,14 +668,14 @@ body.dock-on{padding-bottom:calc(var(--dockH,72px) + 24px)}
           </div>
           <p class="hint" style="margin:0;font-size:13px">Lifts or lowers the whole song, every chord, bass note and lyric chord, and respells the names to suit the new key.</p>
           <div class="row" style="align-items:center;gap:8px;margin-top:6px">
-            <span class="lbl" style="align-self:center">Capo helper</span>
+            <span class="ghead" style="align-self:center" role="heading" aria-level="4">Capo helper</span>
             <select class="sel" id="sbCapo"></select>
           </div>
           <div id="sbCapoOut"></div>
         </div>
       </details>
       <div class="grp" id="sbCopyWrap" hidden>
-        <span class="lbl" id="sbCopyLbl">Copy your export</span>
+        <span class="ghead" role="heading" aria-level="4" id="sbCopyLbl">Copy your export</span>
         <textarea class="tin mono" id="sbCopyText" rows="10" readonly style="font-size:13px"></textarea>
         <div class="row"><button class="btn" id="sbCopyBtn" type="button">Copy to clipboard</button><button class="btn" id="sbCopyClose" type="button">Close</button></div>
       </div>
@@ -608,6 +710,7 @@ body.dock-on{padding-bottom:calc(var(--dockH,72px) + 24px)}
           </div>
         </div>
         <div class="transport">
+          <div class="trow tmain">
           <button class="btn primary" id="sbPlay" type="button">▶ Play section</button>
           <button class="btn" id="sbPlayFrom" type="button" hidden title="Plays from the chord you selected to the end of the section. With Loop on, it repeats just that part. Shift-click or long-press another chord to choose where it stops.">▶ From here</button>
           <button class="btn" id="sbPlaySong" type="button">▶ Play song</button>
@@ -615,12 +718,16 @@ body.dock-on{padding-bottom:calc(var(--dockH,72px) + 24px)}
           <label class="tfld" title="The whole song's tempo. A section can set its own in the section settings.">Song tempo <input class="tin num" id="sbTempo" type="number" min="30" max="260" step="1"> BPM</label>
           <label class="tfld" title="The whole song's time signature. A section can set its own in the section settings.">Song time <select class="sel" id="sbBeats"><option value="2">2/4</option><option value="3">3/4</option><option value="4">4/4</option><option value="5">5/4</option><option value="6">6/8</option><option value="7">7/8</option></select></label>
           <span class="tfld" id="sbSecLen"></span>
-          <span class="tfld band" role="group" aria-label="Band"><span class="lbl" style="margin:0">Band playback</span><label><input type="checkbox" id="pGtr"> Guitar</label><label><input type="checkbox" id="pBass"> Bass</label><label><input type="checkbox" id="pPiano"> Piano</label><label title="Plays the lines written in Vocal lines below" class="melody-only"><input type="checkbox" id="pVox" checked> Melody</label></span>
+          </div>
+          <div class="trow topts" role="group" aria-label="Playback options">
+          <span class="lbl topt-cap">Playback</span>
+          <span class="tfld band" role="group" aria-label="Band"><span class="topt-sub">Band</span><label><input type="checkbox" id="pGtr"> Guitar</label><label><input type="checkbox" id="pBass"> Bass</label><label><input type="checkbox" id="pPiano"> Piano</label><label title="Plays the lines written in Vocal lines below" class="melody-only"><input type="checkbox" id="pVox" checked> Melody</label></span>
           <label class="tfld" id="bassPatWrap">Bass style <select class="sel" id="sbBassPat"><option value="roots">Roots</option><option value="r5">Root and 5th</option><option value="approach">Roots with approach notes</option><option value="walk">Walking line</option></select></label>
           <label class="tfld"><input type="checkbox" id="pLoop" checked> Loop</label>
           <label class="tfld"><input type="checkbox" id="pClick" checked> Click</label>
           <label class="tfld"><input type="checkbox" id="pCount"> Count-in</label>
           <label class="tfld" title="During playback, shows exactly what your chosen instrument is playing: the guitar voicing on the neck, the bass note on the bass neck, or the keys on the piano."><input type="checkbox" id="pWatch"> Watch it play</label>
+          </div>
         </div>
         <div class="nowplaying" id="sbNow" hidden><div class="nowtxt" id="sbNowTxt"></div><div class="mapscroll" id="sbWatch" hidden></div><p class="note" id="sbWatchNote" hidden></p></div>
         <div class="tiles" id="sbTiles"></div>
@@ -630,20 +737,27 @@ body.dock-on{padding-bottom:calc(var(--dockH,72px) + 24px)}
         <details class="fold" data-fold="roll"><summary>Piano roll · drag to change chord lengths</summary><div class="roll" id="sbRoll" hidden></div></details>
         <div class="panel" id="sbLabPanel">
           <h3 class="h3" id="sbLabTitle">Chord lab</h3>
-          <p class="hint" id="sbLabHint"></p>
-          <p class="ctxline" id="sbCtx" hidden></p>
+          <div class="labintro"><p class="hint" id="sbLabHint"></p><label class="labconn" id="sbConnWrap" hidden><input type="checkbox" id="sbConn"> Show how each one connects</label></div>
+          <p class="hint" id="sbCtx" hidden style="font-size:13.5px"></p>
           <div class="grp" id="sbSubsWrap" hidden>
-            <div class="grp"><span class="lbl">Swap it for</span><div class="opts" id="sbSubs"></div></div>
-            <div class="grp"><span class="lbl">Lead into it (adds a chord before)</span><div class="opts" id="sbBefore"></div></div>
-            <div class="grp"><span class="lbl">Follow it with (adds a chord after)</span><div class="opts" id="sbAfter"></div></div>
+            <div class="labtabs" role="tablist" aria-label="What to do with the selected chord">
+              <button type="button" class="labtab" role="tab" data-lab="replace" aria-selected="true">Swap<small id="sbTabSwap"></small></button>
+              <button type="button" class="labtab" role="tab" data-lab="before" aria-selected="false">Before<small id="sbTabBefore"></small></button>
+              <button type="button" class="labtab" role="tab" data-lab="after" aria-selected="false">After<small id="sbTabAfter"></small></button>
+            </div>
+            <div class="labcols">
+              <div class="labcol on" data-mode="replace" role="tabpanel"><div class="labhead" id="sbHeadSwap"></div><div class="opts" id="sbSubs"></div></div>
+              <div class="labcol" data-mode="before" role="tabpanel"><div class="labhead" id="sbHeadBefore"></div><div class="opts" id="sbBefore"></div></div>
+              <div class="labcol" data-mode="after" role="tabpanel"><div class="labhead" id="sbHeadAfter"></div><div class="opts" id="sbAfter"></div></div>
+            </div>
           </div>
         </div>
         <details class="fold" data-fold="pal"><summary id="sbPalTitle">Modal interchange palette</summary><div class="row" id="sbPalMode"></div><div class="grp" id="sbPal"></div></details>
         <details class="fold" data-fold="theory"><summary>What's going on · circle of fifths</summary>
         <div class="legend" style="margin:2px 0 10px"><span><i style="background:var(--t5)"></i>In key</span><span><i style="background:var(--t7)"></i>Borrowed</span><span><i style="background:var(--t3)"></i>Secondary dominant</span><span><i style="background:var(--tx)"></i>Chromatic</span></div>
         <div class="two">
-          <div class="grp"><span class="lbl">What's going on</span><div id="sbTheory"></div></div>
-          <div class="grp"><span class="lbl">Circle of fifths</span><div class="cof" id="sbCof"></div><p class="hint" style="font-size:12.5px">Shaded: chords native to the home key. Dashed: its parallel key, where borrowed color usually comes from. The numbers trace the order you play them.</p></div>
+          <div class="grp"><span class="ghead" role="heading" aria-level="4">What's going on</span><div id="sbTheory"></div></div>
+          <div class="grp"><span class="ghead" role="heading" aria-level="4">Circle of fifths</span><div class="cof" id="sbCof"></div><p class="hint" style="font-size:12.5px">Shaded: chords native to the home key. Dashed: its parallel key, where borrowed color usually comes from. The numbers trace the order you play them.</p></div>
         </div>
         </details>
         <details class="fold" data-fold="rh"><summary>Reharmonize this section</summary>
@@ -651,7 +765,7 @@ body.dock-on{padding-bottom:calc(var(--dockH,72px) + 24px)}
           <div class="rhgrid" id="sbRhOut"></div>
         </details>
         <div class="lyricsbox melody-only" id="sbVox">
-          <span class="lbl">Vocal lines</span>
+          <span class="ghead" role="heading" aria-level="4">Vocal lines</span>
           <p class="hint" style="margin:0;font-size:13px">Give each voice a line of its own, starting where the section starts. Write the notes in order with their length in beats after a colon: <span class="mono">E4:2</span> holds for two beats, <span class="mono">F#4:1/2</span> for half a beat, a bare note for one, and <span class="mono">r:1</span> rests for a beat. Name the first note’s octave; the others find the nearest one.</p>
           <div class="grp" id="sbVoxRows"></div>
           <div class="row"><button class="btn" id="sbVoxAdd" type="button">+ Add the lead melody</button></div>
@@ -678,9 +792,9 @@ body.dock-on{padding-bottom:calc(var(--dockH,72px) + 24px)}
 
       <div class="panel">
         <h3 class="h3">Song map</h3>
-        <div class="grp"><span class="lbl">Running order</span><div class="formstrip" id="sbForm"></div><span class="keylabel" id="sbTotal" style="font-weight:400"></span></div>
+        <div class="grp"><span class="ghead" role="heading" aria-level="4">Running order</span><div class="formstrip" id="sbForm"></div><span class="keylabel" id="sbTotal" style="font-weight:400"></span></div>
         <div class="row"><div class="row" id="sbFormAdd"></div><button class="btn" id="sbClearForm" type="button">Clear order</button></div>
-        <div class="grp"><span class="lbl">How the sections connect</span><div class="rels" id="sbRel"></div></div>
+        <div class="grp"><span class="ghead" role="heading" aria-level="4">How the sections connect</span><div class="rels" id="sbRel"></div></div>
       </div>
 
     </div>
@@ -693,7 +807,7 @@ body.dock-on{padding-bottom:calc(var(--dockH,72px) + 24px)}
     <p class="sub">Every way to play a chord, mapped across your instrument. <a href="#" class="howlink" data-how="h-explorer">How this page works</a></p>
     <div class="songctx" data-ctx="lens"></div>
     <div class="grp" id="exSearchWrap">
-      <label class="lbl" for="exSearch" style="font-size:12.5px;color:var(--ink)">Search or type any chord</label>
+      <label class="ghead" for="exSearch">Search or type any chord</label>
       <form class="progin" id="exSearchForm" autocomplete="off">
         <input id="exSearch" class="mono" type="search" placeholder="Type a chord, e.g. F#m7b5, Cmaj9, E7#9, Am/C" spellcheck="false" aria-label="Search for a chord">
         <button class="btn primary" type="submit">Show chord</button>
@@ -715,21 +829,29 @@ body.dock-on{padding-bottom:calc(var(--dockH,72px) + 24px)}
       </div>
     </section>
 
-    <section class="controls">
-      <div class="grp"><span class="lbl">Root</span><div class="row" id="roots"></div></div>
-      <div class="grp"><span class="lbl">Quick picks</span><div class="row" id="song"></div></div>
-      <div class="grp"><span class="lbl">Triads</span><div class="row" id="q3"></div></div>
-      <div class="grp"><span class="lbl">Sevenths and sixths</span><div class="row" id="q4"></div></div>
-      <div class="grp"><span class="lbl">Extended and altered</span><div class="row" id="q5"></div></div>
-      <div class="grp nobass" id="keepGrp" hidden><span class="lbl">Notes in the shape</span><div class="keepwrap"><div class="grp" style="gap:6px"><div class="row" id="keeps"></div><span class="hint" id="keepHint"></span></div><div class="keepprev" id="keepPrev" aria-label="Preview of the current shape"></div></div></div>
-      <div class="grp gtr-only"><span class="lbl">Voicing family</span><div class="row" id="views"></div></div>
-      <div class="grp gtr-only"><span class="lbl">String set</span><div class="row" id="sets"></div></div>
-      <div class="grp gtr-only"><span class="lbl">Bass note (inversion)</span><div class="row" id="invs"></div></div>
+    <section class="xpick">
+      <div class="xstep">
+        <span class="ghead xh" role="heading" aria-level="3"><span class="xn">1</span> Pick a chord</span>
+        <div class="grp" id="quickGrp"><span class="lbl">Quick picks</span><div class="row" id="song"></div></div>
+        <div class="grp"><span class="lbl">Root</span><div class="row" id="roots"></div></div>
+        <div class="grp"><span class="lbl">Chord type</span>
+          <div class="qrow"><span class="qcap">Triads</span><div class="row" id="q3"></div></div>
+          <div class="qrow"><span class="qcap">Sevenths and sixths</span><div class="row" id="q4"></div></div>
+          <details class="fold xmore" id="q5Fold"><summary>More chord types <span class="foldsum" id="q5Sum">9ths, 11ths, 13ths, sus, add and altered</span></summary><div class="row" id="q5"></div></details>
+        </div>
+      <div class="grp nobass" id="keepGrp" hidden><span class="ghead" role="heading" aria-level="4">Notes in the shape</span><div class="keepwrap"><div class="grp" style="gap:6px"><div class="row" id="keeps"></div><span class="hint" id="keepHint"></span></div><div class="keepprev" id="keepPrev" aria-label="Preview of the current shape"></div></div></div>
+      </div>
+      <div class="xstep gtr-only">
+        <span class="ghead xh" role="heading" aria-level="3"><span class="xn">2</span> Choose the shapes</span>
+        <div class="grp"><span class="lbl">Voicing family</span><div class="row" id="views"></div></div>
+        <div class="grp"><span class="lbl">String set</span><div class="row" id="sets"></div></div>
+        <div class="grp"><span class="lbl">Bass note (inversion)</span><div class="row" id="invs"></div></div>
+      </div>
     </section>
 
     <section class="mapbox">
       <div class="maphead">
-        <span class="lbl" id="maplbl">Every chord tone, frets 0–15</span>
+        <span class="ghead" role="heading" aria-level="4" id="maplbl">Every chord tone, frets 0–15</span>
         <div class="toolbar">
           <button class="btn" id="namesBtn" aria-pressed="false">Show note names</button>
         </div>
@@ -740,7 +862,7 @@ body.dock-on{padding-bottom:calc(var(--dockH,72px) + 24px)}
     <section class="grp piano-only">
       <h2 id="pianoTitle">On the keys</h2>
       <p class="sub">The same chord in the shapes pianists actually use. Rings mark the left hand. Tap one to hear it, and see it lit on the keyboard above.</p>
-      <div class="row rollpick"><span class="lbl" style="margin:0">Play chords</span></div>
+      <div class="row rollpick"><span class="ghead" style="margin:0" role="heading" aria-level="4">Play chords</span></div>
       <div class="cards pcards" id="pianoCards"></div>
     </section>
     <section class="grp bass-only">
@@ -780,7 +902,7 @@ body.dock-on{padding-bottom:calc(var(--dockH,72px) + 24px)}
       <p class="hint">Left hand takes the root (or the slash note); the right hand moves to the nearest inversion each time, so most notes stay put. The number between chords counts them. Tap a chord to hear it.</p>
     </div>
     <div class="grp bass-only" id="bassProg">
-      <span class="lbl">Bass line</span>
+      <span class="ghead" role="heading" aria-level="4">Bass line</span>
       <div class="row" id="bassPats"></div>
       <div class="row"><button class="btn primary" id="bassPlay" type="button">Play the line</button><span class="row" id="bassViewPick" style="margin-left:auto"><span class="lbl" style="margin:0">Show as</span></span></div>
       <div class="mapscroll" id="bassNeckWrap"><div id="bassNeck"></div><p class="hint" id="bassNeckNote" style="margin:4px 0 0"></p></div>
@@ -806,7 +928,7 @@ body.dock-on{padding-bottom:calc(var(--dockH,72px) + 24px)}
       <div class="follow" id="follow"></div>
     </div>
     <div class="mapbox">
-      <div class="maphead"><span class="lbl" id="smaplbl">Scale on the neck</span></div>
+      <div class="maphead"><span class="ghead" role="heading" aria-level="4" id="smaplbl">Scale on the neck</span></div>
       <div class="grp" style="margin-bottom:8px"><span class="lbl">Show target notes over</span><div class="row" id="targets"></div><div class="row" id="tmodes"></div></div>
       <p class="changenote" id="schange" hidden></p>
       <div class="mapscroll"><svg id="smap" viewBox="-18 0 828 174" role="img" aria-label="Fretboard map of the selected scale"></svg></div>
@@ -820,7 +942,7 @@ body.dock-on{padding-bottom:calc(var(--dockH,72px) + 24px)}
   <p class="sub">Put down the notes you're holding and the tome names the chord.<span class="gtr-only"> Retune the guitar for your song, and every page follows.</span> <a href="#" class="howlink" data-how="h-finder">How this page works</a></p>
   <div class="songctx" data-ctx="finder"></div>
   <section class="grp gtr-only tubar" id="tuBar">
-    <div class="grp"><span class="lbl">Your song's tuning</span><div class="row" id="tuPresets"></div></div>
+    <div class="grp"><span class="ghead" role="heading" aria-level="4">Your song's tuning</span><div class="row" id="tuPresets"></div></div>
     <div class="tunow" id="tuNow"></div>
     <div class="tustrings" id="tuStrings" aria-label="String by string"></div>
     <p class="hint" id="tuDiff"></p>
@@ -830,20 +952,20 @@ body.dock-on{padding-bottom:calc(var(--dockH,72px) + 24px)}
   <section class="grp nobass" id="finder">
     <div class="finderhead">
       <div>
-        <span class="lbl">What am I playing?</span>
+        <span class="ghead" role="heading" aria-level="4">What am I playing?</span>
         <div class="chordname" id="fname">Am/C</div>
         <div class="spell" id="fnotes"></div>
       </div>
       <div class="toolbar">
         <button class="btn" id="fplay" type="button">Play</button>
-        <span class="row rollpick piano-only"><span class="lbl" style="margin:0">Play chords</span></span>
+        <span class="row rollpick piano-only"><span class="ghead" style="margin:0" role="heading" aria-level="4">Play chords</span></span>
         <button class="btn" id="fclear" type="button">Clear</button>
       </div>
     </div>
     <p class="sub" id="fhelp">Found a shape by accident? Place the notes you’re holding, one per string as on a real guitar, and the tome will name it. Tap a note again to lift it, or left of the nut for an open string.</p>
     <div class="mapbox piano-only"><div class="octbar"><button class="btn" id="foctDn" type="button" aria-label="Show one octave lower">‹ Octave down</button><span class="octlab" id="foctLab">C3–C6</span><button class="btn" id="foctUp" type="button" aria-label="Show one octave higher">Octave up ›</button><span class="offnote" id="foctOff"></span></div><div id="fkeys"></div></div>
     <div class="mapbox gtr-only"><div class="mapscroll"><svg id="fboard" viewBox="-18 0 828 174" role="img" aria-label="Tap frets to enter a chord shape"></svg></div></div>
-    <div class="grp" id="faltwrap"><span class="lbl">Other names for the same notes</span><div class="row" id="falts"></div></div>
+    <div class="grp" id="faltwrap"><span class="ghead" role="heading" aria-level="4">Other names for the same notes</span><div class="row" id="falts"></div></div>
     <div class="row">
       <button class="btn" id="fopen" type="button">Show this chord in the explorer</button>
       <button class="btn" id="fadd" type="button">Add to this section</button>
@@ -852,7 +974,7 @@ body.dock-on{padding-bottom:calc(var(--dockH,72px) + 24px)}
   <section class="grp gtr-only" id="tuPage">
     <h3 class="tuh">Your section in this tuning</h3>
     <div class="grp">
-      <span class="lbl">Progression</span>
+      <span class="ghead" role="heading" aria-level="4">Progression</span>
       <div class="row" id="tuSecRow"></div>
       <div class="row"><input class="tin mono" id="tuProg" type="text" spellcheck="false" autocomplete="off" aria-label="Chords to show in this tuning" placeholder="Type chords, e.g. Dmaj7 G Bm A"><button class="btn" id="tuPlayAll" type="button">Play through</button></div>
       <p class="hint" id="tuSrc"></p>
@@ -867,13 +989,18 @@ body.dock-on{padding-bottom:calc(var(--dockH,72px) + 24px)}
   <section class="grp howtopage">
     <h2>How-to</h2>
     <p class="sub">Short guides to the parts of the tome you'll use most. Everything here works on the song open on the Composition page. Tap a guide to open it.</p>
+    <section class="tourpanel" id="tourPanel" aria-labelledby="tourHead">
+      <div class="tourtop"><h3 class="h3" id="tourHead">Guided tour</h3><span class="hint" id="tourCount"></span></div>
+      <p class="hint">Each chapter takes a minute or two and walks you through the real thing, one tap at a time. Press Escape or Close to stop any time.</p>
+      <ol class="tourlist" id="tourList"></ol>
+    </section>
     <div class="howlist">
 
     <details class="fold how" id="h-start" open><summary>Start here: your first song in five minutes</summary>
       <ol class="howsteps">
         <li><b>Start a song.</b> On Composition, press <i>New song</i> and type a title. It saves as you go.</li>
         <li><b>Type the chords of one section.</b> In <i>Chords</i>, write them the way you'd say them: <span class="mono">Am F C G</span>. Spaces or commas between chords both work.</li>
-        <li><b>Press ▶ Play section.</b> The band plays them with a click. Tick or untick <i>Guitar</i>, <i>Bass</i> and <i>Piano</i> under Band playback to choose who plays.</li>
+        <li><b>Press ▶ Play section.</b> The band plays them with a click. Tick or untick <i>Guitar</i>, <i>Bass</i> and <i>Piano</i> under Band in the playback row to choose who plays.</li>
         <li><b>Add the next section.</b> Use <i>+ Add section…</i> next to the section tabs (Chorus, Bridge and so on) and type its chords.</li>
         <li><b>Put the song in order.</b> In <i>Song map</i>, add sections to the running order, then press <i>▶ Play song</i>.</li>
       </ol>
@@ -917,8 +1044,8 @@ body.dock-on{padding-bottom:calc(var(--dockH,72px) + 24px)}
     <details class="fold how" id="h-chordlab"><summary>Chord lab: swapping chords and borrowing colour</summary>
       <ol class="howsteps">
         <li>Tap a chord tile to select it.</li>
-        <li>Under <i>Swap it for</i>, tap an option to hear it in place. Tapping puts it in your section; <i>Undo</i> takes it back.</li>
-        <li><i>Lead into it</i> adds a chord before the one you selected, and <i>Follow it with</i> adds one after. The new chord becomes the selection, so you can keep writing forward.</li>
+        <li>The Chord lab sets out three choices: <i>Swap</i>, <i>Play before</i> and <i>Play after</i>. On a phone they're three tabs. The small strip under each heading shows where the new chord lands.</li>
+        <li>Tap a suggestion to hear it and put it in your section; <i>Undo</i> takes it back. A chord added after becomes the selection, so you can keep writing forward. The first four suggestions in each column are the best fits; <i>Show more</i> lists the rest, and <i>Show how each one connects</i> spells out every move.</li>
         <li>Open the <i>Modal interchange palette</i> for borrowed chords: chords from the key's parallel major or minor and its modes that add darker or brighter colour. Each card says how smoothly it connects to the chords around it.</li>
         <li><i>Reharmonize this section</i> (folded further down) offers whole new versions: Darker, Brighter, Jazzier, Simpler or Pop/EDM.</li>
       </ol>
@@ -1891,6 +2018,7 @@ function renderControls(){
   const q3=$('q3'),q4=$('q4');q3.innerHTML='';q4.innerHTML='';
   const q5=$('q5');q5.innerHTML='';
   Object.entries(QUAL).filter(([k,v])=>!v.dyn).forEach(([k,v])=>{const lab=v.sym||'maj';(v.ext?q5:v.tones.length===3?q3:q4).append(chip(lab,k===S.qual,()=>setQual(k)));});
+  {const f=$('q5Fold'),sm=$('q5Sum'),Q=QUAL[S.qual];if(f&&Q&&Q.ext){f.open=true;sm.textContent='showing '+(Q.sym||S.qual);}else if(sm)sm.textContent='9ths, 11ths, 13ths, sus, add and altered';}
   const vw=$('views');vw.innerHTML='';VIEWS.filter(([k])=>k!=='tuned'||ALT()).forEach(([k,l])=>vw.append(chip(l,k===S.view,()=>{S.view=k;S.set='all';S.inv='all';S.sel=null;update();},!viewAllowed(k,S.qual))));
 }
 function viewFallback(q){return ALT()?'tuned':vc(q)===3?'triad':'drop2';}
@@ -2039,7 +2167,7 @@ function setTuning(t){const song=sbSong();t=t.slice();
   const was=ALT();applyTuning(t);if(!was&&ALT())S.view='tuned';TU.tun=TUNING.slice();TU.pick={};tuningRefresh();}
 function tuningName(t){const p=TU_PRESETS.find(p=>p[2].every((x,i)=>x===t[i]));return p?p[0]:t.map(m=>TUN_NOTE[((m%12)+12)%12]).join('');}
 function tuneNoteRender(){const el=$('sbTuneNote');if(!el)return;const song=sbSong();const alt=ALT();
-  el.innerHTML=`<span class="lbl" style="align-self:center">Guitar tuning</span><b>${esc(tuningName(TUNING))}</b> <span class="keysub">${alt?TUNING.map(m=>TUN_NOTE[m%12]).join(' ')+' · every guitar page uses it':''}</span> <button type="button" class="btn sm" id="sbTuneGo">${alt?'Change':'Retune'}…</button>`;
+  el.innerHTML=`<span class="ghead" style="align-self:center" role="heading" aria-level="4">Guitar tuning</span><b>${esc(tuningName(TUNING))}</b> <span class="keysub">${alt?TUNING.map(m=>TUN_NOTE[m%12]).join(' ')+' · every guitar page uses it':''}</span> <button type="button" class="btn sm" id="sbTuneGo">${alt?'Change':'Retune'}…</button>`;
   $('sbTuneGo').onclick=()=>{const t=document.querySelector('.tome-tab[data-page="finder"]');if(t)t.click();setTimeout(()=>{const b=$('tuBar');if(b)b.scrollIntoView({behavior:'smooth',block:'start'});},650);};}
 const tuNoteNames=['C','C♯','D','E♭','E','F','F♯','G','A♭','A','B♭','B'];
 const tuNote=m=>tuNoteNames[((m%12)+12)%12];
@@ -2118,7 +2246,7 @@ function tuRenderTop(){
     box.append(el);
   }
   const changed=TU.tun.map((m,s)=>m-TU_STD[s]).map((d,s)=>d?`${6-s}${['th','th','th','rd','nd','st'][s]} ${d>0?'up':'down'} ${Math.abs(d)===2?'a whole step':Math.abs(d)===1?'a half step':Math.abs(d)+' half steps'}`:null).filter(Boolean);
-  $('tuNow').innerHTML=`<span class="lbl">Now tuned to</span><b>${cur||'Custom'}</b><span class="mono">${TU.tun.map(tuNote).join(' ')}</span><span class="hint" style="font-size:12.5px">${sbSong()?`Saved with “${esc(sbSong().title||'Untitled song')}”. ${cur==='Standard'||!ALT()?'':'Every guitar page uses it: chord names, shapes, the path, scale maps and playback.'}`:'No song open, so this tuning isn\'t saved.'}</span>`;
+  $('tuNow').innerHTML=`<span class="ghead" role="heading" aria-level="4">Now tuned to</span><b>${cur||'Custom'}</b><span class="mono">${TU.tun.map(tuNote).join(' ')}</span><span class="hint" style="font-size:12.5px">${sbSong()?`Saved with “${esc(sbSong().title||'Untitled song')}”. ${cur==='Standard'||!ALT()?'':'Every guitar page uses it: chord names, shapes, the path, scale maps and playback.'}`:'No song open, so this tuning isn\'t saved.'}</span>`;
   $('tuDiff').textContent=(cur?cur+': ':'Custom: ')+TU.tun.map(tuNote).join(' ')+(changed.length?' · from standard: '+changed.join(', '):' · standard tuning')+'. Strings can go up to 3 half steps above standard or 5 below.';
   const song=sbSong(),row=$('tuSecRow');row.innerHTML='';
   if(song&&song.sections.length){song.sections.forEach((sc,i)=>row.append(chip(sc.name||'Section',i===TU.secIdx,()=>{songSetSec(i);TU.pick={};tuFillFromSection();tuRenderCards();tuRenderTop();})));}
@@ -2762,7 +2890,8 @@ $('fadd').onclick=()=>{const c=fdId().cands[FD.pick];if(!c||!c.type.qk)return;
 renderFinder();
 // ---- Composition sandbox UI ----
 const SECTION_NAMES=['Intro','Verse','Pre-chorus','Chorus','Post-chorus','Bridge','Build','Drop','Breakdown','Outro'];
-const SB={db:null,mode:'connecting',songs:[],songId:null,sec:0,sel:-1,selEnd:-1,undo:[],dirty:false,palMode:'replace',confirm:null};
+const SB={db:null,mode:'connecting',songs:[],songId:null,sec:0,sel:-1,selEnd:-1,undo:[],dirty:false,palMode:'replace',confirm:null,labMore:{},labTab:'replace',labConn:false};
+const LAB_SHOW=4;try{const lt=localStorage.getItem('atlasLabTab');if(lt==='before'||lt==='after'||lt==='replace')SB.labTab=lt;SB.labConn=localStorage.getItem('atlasLabConn')==='1';}catch(e){}
 function sbId(){return 'x'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
 function sbNewSong(title){return {title:title||'Untitled song',created:Date.now(),updated:Date.now(),sections:[{id:sbId(),name:'Verse',prog:'',home:'auto',mode:'auto',loop:true}],form:[]};}
 function sbSong(){return SB.songs.find(x=>x.id===SB.songId)||null;}
@@ -3006,7 +3135,7 @@ function sbRender(){
     main.textContent=manual?`Key: ${keyName(k)} (set by you)`:`Key: ${keyName(top)}, detected (${conf})`;
     kl.append(main);
     const sub=document.createElement('span');sub.className='keysub';
-    sub.textContent=manual?(same?` · matches the detected key`:` · detected: ${keyName(top)}`):` · next closest: ${keyName(sec2)}`;
+    sub.textContent=manual?(same?`matches the detected key`:`detected: ${keyName(top)}`):`next closest: ${keyName(sec2)}`;
     kl.append(sub);
     if(manual&&!same){const b=document.createElement('button');b.type='button';b.className='btn';b.textContent=`Use ${keyName(top)}`;b.onclick=()=>sbEdit(sc=>{sc.home='auto';sc.mode='auto';});kl.append(b);}
   }
@@ -3054,7 +3183,7 @@ function sbRender(){
     const rowB=document.createElement('div');rowB.className='row durrow';rowB.innerHTML='<span class="durlab">Bars</span>';
     [1,2,3,4,6,8].forEach(n=>rowB.append(chip(n===1?'1 bar':n+' bars',near(curD,n),()=>setD(n))));
     const rowX=document.createElement('div');rowX.className='row durrow';
-    rowX.innerHTML=`<span class="durlab">Exact</span><input class="tin num" id="sbDurBeats" type="text" inputmode="decimal" aria-label="Length in quarter-note beats" value="${Math.round(curD*Q*1000)/1000}"><span class="keysub">beats (quarter notes, e.g. 5 or 2/3)</span>`;
+    rowX.innerHTML=`<span class="durlab">Exact</span><input class="tin num" id="sbDurBeats" type="text" inputmode="decimal" aria-label="Length in quarter-note beats" value="${Math.round(curD*Q*1000)/1000}"><span class="keysub">beats<span class="durx"> (quarter notes, e.g. 5 or 2/3)</span></span>`;
     const mk=(l,fn)=>{const b2=document.createElement('button');b2.type='button';b2.className='btn';b2.textContent=l;b2.onclick=fn;return b2;};
     rowX.append(mk('Set',()=>{const v=$('sbDurBeats').value.trim();let q=v.includes('/')?(+v.split('/')[0])/(+v.split('/')[1]):+v;if(q>0)setD(q/Q);else{$('sbDurBeats').focus();}}),mk('− 8th',()=>setD(curD-0.5/Q)),mk('+ 8th',()=>setD(curD+0.5/Q)));
     dr.append(rowN,rowB,rowX);
@@ -3081,8 +3210,8 @@ function sbRender(){
   lyrPreview(sec.lyrics||'');
   // lab
   const lab=$('sbLab'),sel=SB.sel>=0?chords[SB.sel]:null;
-  $('sbLabTitle').textContent=sel?`Try something different for ${sel.sym} (${analyzeChord(sel,k,chords[SB.sel+1]||chords[0]).numeral})`:'Chord lab';
-  $('sbLabHint').textContent=sel?'Tap an option to hear it in its place. A chord you add plays alongside this one so you hear the move, and a chord added after becomes the new selection, so you can keep writing forward. Undo steps back.':'Choose a chord above to see what else could stand in its place. Until you do, palette chords are added to the end of the section.';
+  if(sel){const t=$('sbLabTitle');t.textContent=`Try something different for ${sel.sym} `;const nu=document.createElement('small');nu.style.cssText='font:400 .62em var(--mono);color:var(--muted)';nu.textContent=analyzeChord(sel,k,chords[SB.sel+1]||chords[0]).numeral;t.append(nu);}else $('sbLabTitle').textContent='Chord lab';
+  $('sbLabHint').textContent=sel?'Tap any suggestion to hear it and put it in your section. Undo takes it back.':'Choose a chord above to see what else could stand in its place. Until you do, palette chords are added to the end of the section.';
   const subs=$('sbSubs'),bef=$('sbBefore'),aft=$('sbAfter');subs.innerHTML='';bef.innerHTML='';aft.innerHTML='';
   const nC=chords.length,looping=sec.loop!==false&&nC>1;
   const endNexts=(looping?[{ch:chords[0],label:'loop'}]:[]).concat(NB.nexts);
@@ -3093,7 +3222,8 @@ function sbRender(){
   const fmtN=(arr,none)=>arr.length?arr.map(x=>`<b>${x.ch.sym}</b>${x.label?` <span class="keysub">(${x.label==='loop'?'loop back':x.label})</span>`:''}`).join(' or '):`<span class="keysub">${none}</span>`;
   const ctxTags=ev=>ev.tags.length?`<span class="ctxtags">${ev.tags.map(t=>`<span class="ctag ${t.q}">${t.text}</span>`).join('')}</span>`:'';
   const ctxLine=$('sbCtx');
-  if(sel&&(nC>1||NB.prevs.length||NB.nexts.length)){ctxLine.hidden=false;const edge=SB.sel===0||SB.sel===nC-1;ctxLine.innerHTML=`Options are ranked by how well they connect to their neighbors: ${fmtN(cx.prevs,'(song start)')} → <b>[${sel.sym}]</b> → ${fmtN(cx.nexts,'(song end)')}.${edge&&(NB.prevs.length||NB.nexts.length)?` <span class="keysub">Neighboring sections come from your ${NB.source==='order'?'running order':'section tabs (add this section to the running order to control this)'}.</span>`:''}`;}else ctxLine.hidden=true;
+  if(sel&&(nC>1||NB.prevs.length||NB.nexts.length)){ctxLine.hidden=false;const edge=SB.sel===0||SB.sel===nC-1;ctxLine.innerHTML=`Best fits come first, judged against what's on either side. Before it: ${fmtN(cx.prevs,'the song start')}. After it: ${fmtN(cx.nexts,'the song end')}.${edge&&(NB.prevs.length||NB.nexts.length)?` <span class="keysub">Neighboring sections come from your ${NB.source==='order'?'running order':'section tabs (add this section to the running order to control this)'}.</span>`:''}`;}else ctxLine.hidden=true;
+  {const mk=SB.songId+'|'+SB.sec+'|'+SB.sel;if(SB.labKey!==mk){SB.labKey=mk;SB.labMore={};}}
   if(sel){
     let all=subsFor(sel,k,chords,SB.sel).concat(nextFor(sel,k,chords,SB.sel));
     const seenSM=new Set(all.map(o=>o.sym+o.mode));
@@ -3103,7 +3233,10 @@ function sbRender(){
     all.sort((x,y)=>y.ev.score-x.ev.score);
     all.forEach(o=>{
       const b=document.createElement('button');b.type='button';b.className='opt';
-      b.innerHTML=`<span class="osym">${o.sym}</span><span class="onum">${o.numeral}${o.ctx?' · fits this spot':''}</span><span class="owhy">${o.why}</span>`+ctxTags(o.ev)+(o.mode==='replace'?voxSwapTag(sec,toks,SB.sel,o.sym,song.beats||4):'');
+      const grpEl=o.mode==='before'?bef:o.mode==='after'?aft:subs,rank=grpEl.children.length;
+      if(rank>=LAB_SHOW&&!SB.labMore[o.mode])b.hidden=true;
+      b.innerHTML=`<span class="ohead"><span class="osym">${o.mode==='replace'?'':'+ '}${o.sym}</span>${rank===0?'<span class="obadge best">Best fit</span>':o.ctx?'<span class="obadge">Fits this spot</span>':''}</span><span class="onum">${o.numeral}</span><span class="owhy">${o.why}</span>`+ctxTags(o.ev)+(o.mode==='replace'?voxSwapTag(sec,toks,SB.sel,o.sym,song.beats||4):'');
+      b.setAttribute('aria-label',(o.mode==='replace'?`Swap ${sel.sym} for ${o.sym}`:o.mode==='before'?`Add ${o.sym} before ${sel.sym}`:`Add ${o.sym} after ${sel.sym}`)+'. '+o.why);
       b.onclick=()=>{const idx=SB.sel,orig=sel;
         sbEdit(sc=>{const t=tokList(sc);
           if(o.mode==='before'){t.splice(idx,0,{sym:o.sym,dur:1});SB.sel=idx+1;}
@@ -3116,8 +3249,26 @@ function sbRender(){
       };
       (o.mode==='before'?bef:o.mode==='after'?aft:subs).append(b);
     });
-    [[subs,'No swaps for this one.'],[bef,'Nothing to add before this one.'],[aft,'No suggestions after this one.']].forEach(([el,t])=>{if(!el.children.length)el.innerHTML=`<p class="hint">${t}</p>`;});
+    const counts={};
+    [[subs,'replace','No swaps for this one.'],[bef,'before','Nothing to add before this one.'],[aft,'after','No suggestions after this one.']].forEach(([el,m,t])=>{
+      const n=el.children.length;counts[m]=n;
+      if(!n){el.innerHTML=`<p class="hint">${t}</p>`;return;}
+      if(n>LAB_SHOW){const mb=document.createElement('button');mb.type='button';mb.className='btn sm labmore';mb.textContent=SB.labMore[m]?'Show fewer':`Show ${n-LAB_SHOW} more`;mb.onclick=()=>{SB.labMore[m]=!SB.labMore[m];sbRender();};el.append(mb);}
+    });
+    const eH=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);
+    const nm=c=>c?`<span>${eH(c.sym)}</span>`:'',arw='<i>→</i>';
+    const pv=cx.prev?nm(cx.prev)+arw:'<span class="edge">start</span>'+arw,nx=cx.next?arw+nm(cx.next):arw+'<span class="edge">end</span>';
+    const S=eH(sel.sym);
+    $('sbHeadBefore').innerHTML=`<h4 class="ghead">Play before ${S}</h4><span class="labwhat">Adds a new chord that leads into ${S}.</span><div class="labmini" aria-hidden="true">${pv}<span class="new">new</span>${arw}<span class="cur">${S}</span></div>`;
+    $('sbHeadSwap').innerHTML=`<h4 class="ghead">Swap ${S} for…</h4><span class="labwhat">Replaces ${S}; the length stays the same.</span><div class="labmini" aria-hidden="true">${pv}<span class="gone">${S}</span><span class="new">new</span>${nx}</div>`;
+    $('sbHeadAfter').innerHTML=`<h4 class="ghead">Play after ${S}</h4><span class="labwhat">Adds a new chord that follows ${S} and selects it, so you can keep writing.</span><div class="labmini" aria-hidden="true"><span class="cur">${S}</span>${arw}<span class="new">new</span>${nx}</div>`;
+    $('sbTabBefore').textContent=`${counts.before} idea${counts.before===1?'':'s'}`;$('sbTabSwap').textContent=`${counts.replace} idea${counts.replace===1?'':'s'}`;$('sbTabAfter').textContent=`${counts.after} idea${counts.after===1?'':'s'}`;
+    const tabM=SB.labTab||'replace';
+    document.querySelectorAll('#sbSubsWrap .labtab').forEach(t=>{t.setAttribute('aria-selected',String(t.dataset.lab===tabM));t.onclick=()=>{SB.labTab=t.dataset.lab;try{localStorage.setItem('atlasLabTab',SB.labTab)}catch(e){}sbRender();};});
+    document.querySelectorAll('#sbSubsWrap .labcol').forEach(c=>c.classList.toggle('on',c.dataset.mode===tabM));
   }
+  $('sbConnWrap').hidden=!sel;
+  {const cb=$('sbConn');cb.checked=!!SB.labConn;$('sbLabPanel').classList.toggle('showconn',!!SB.labConn);cb.onchange=()=>{SB.labConn=cb.checked;try{localStorage.setItem('atlasLabConn',cb.checked?'1':'')}catch(e){}$('sbLabPanel').classList.toggle('showconn',cb.checked);};}
   $('sbSubsWrap').hidden=!sel;
   const pal=$('sbPal');pal.innerHTML='';
   $('sbPalMode').innerHTML='';
@@ -3236,7 +3387,7 @@ function sbKickRender(song){
     b.innerHTML=`<span class="rank">${i===0?'Best fit':i<3?'Option '+(i+1):'Your pick'}</span><span class="sname">${lbl(r.p)} · ${h.hz.toFixed(1)} Hz</span><span class="stat"><span class="st fits">${pc(cl.fits)}% fits</span><span class="st rub">${pc(cl.rub)}% mild</span><span class="st clash">${pc(cl.clash)}% rubs</span></span>${h.hz>62?`<p class="sdesc">On the high side for a kick tail; the octave below is ${(h.hz/2).toFixed(1)} Hz.</p>`:h.hz<40?`<p class="sdesc">Very deep: mostly felt, not heard. The octave above is ${(h.hz*2).toFixed(1)} Hz.</p>`:''}`;
     b.onclick=()=>{SB.kick=r.p;sbKickRender(song);};cards.append(b);});
   out.append(cards);
-  const pick=document.createElement('div');pick.className='grp';pick.innerHTML='<span class="lbl">Try another note</span>';
+  const pick=document.createElement('div');pick.className='grp';pick.innerHTML='<span class="ghead" role="heading" aria-level="4">Try another note</span>';
   const pr=document.createElement('div');pr.className='row';
   [...Array(12).keys()].forEach(p=>pr.append(chip(nm(p),p===SB.kick,()=>{SB.kick=p;sbKickRender(song);})));
   pick.append(pr);out.append(pick);
@@ -3257,7 +3408,7 @@ function sbKickRender(song){
     if(secRubs.length)rubs.push({x,secRubs,sbest});});
   out.append(strips);
   // fixes
-  const fx=document.createElement('div');fx.className='grp';fx.innerHTML='<span class="lbl">Where it rubs, and what to do</span>';
+  const fx=document.createElement('div');fx.className='grp';fx.innerHTML='<span class="ghead" role="heading" aria-level="4">Where it rubs, and what to do</span>';
   const tail=[Math.round(beat*0.3),Math.round(beat*0.55)];
   if(!rubs.length)fx.innerHTML+=`<p class="hint" style="margin:0">${escH(lbl(p))} sits cleanly under every chord. Any tail length works; around ${tail[0]}–${tail[1]} ms keeps it tight at ${tempo} BPM.</p>`;
   else{const ul=document.createElement('ul');ul.className='tips';
@@ -3988,6 +4139,171 @@ rollPickRender();
 $('sbSongQ').addEventListener('input',()=>sbRender());
 $('sbSongSort').addEventListener('change',()=>{try{localStorage.setItem('tomeSongSort',$('sbSongSort').value);}catch(e){}sbRender();});
 try{const so=localStorage.getItem('tomeSongSort');if(so)$('sbSongSort').value=so;}catch(e){}
+/* ---- Guided tour (v59): a 60-second start on its own tutorial song, then short chapters on the How-to page. Replaces the old first-use hints. ---- */
+function tourPaint(seed){
+    const PIGS=[['#2F5BE0','#7B4FD6'],['#E5432F','#F29A1D'],['#12A07A','#2F8FD8'],['#E8336D','#8A4FD1'],['#F2A516','#E5432F'],['#14A3BC','#2F5BE0'],['#8A4FD1','#E8336D']];
+    const [pg,pg2]=PIGS[3],rnd=k=>((seed*37+k*53)%100)/100;
+    const dots=[0,1,2,3].map(k=>{const a=rnd(k)*6.283,r=50+6+rnd(k+7)*8;return `<circle cx="${(50+Math.cos(a)*r*0.98).toFixed(1)}" cy="${(50+Math.sin(a)*r*0.92).toFixed(1)}" r="${(0.6+rnd(k+3)*1.6).toFixed(2)}" style="fill:${k%2?pg2:pg}" opacity=".55"/>`;}).join('');
+    return `<svg class="bloom-paint" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><defs>
+      <filter id="wc${seed}" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="3" seed="${seed}" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="8" xChannelSelector="R" yChannelSelector="G" result="d"/><feGaussianBlur in="d" stdDeviation="0.3"/></filter>
+      <radialGradient id="wg${seed}" cx="${42+seed%12}%" cy="${40+seed%14}%" r="64%"><stop offset="0" stop-color="${pg}" stop-opacity=".10"/><stop offset=".55" stop-color="${pg}" stop-opacity=".22"/><stop offset=".82" stop-color="${pg}" stop-opacity=".40"/><stop offset=".955" stop-color="${pg}" stop-opacity=".78"/><stop offset="1" stop-color="${pg}" stop-opacity="0"/></radialGradient>
+      <radialGradient id="wb${seed}"><stop offset="0" stop-color="${pg2}" stop-opacity=".42"/><stop offset=".7" stop-color="${pg2}" stop-opacity=".22"/><stop offset="1" stop-color="${pg2}" stop-opacity="0"/></radialGradient></defs>
+      <ellipse cx="50" cy="50" rx="47" ry="45" style="fill:color-mix(in srgb,${pg} 14%,var(--surface))" opacity=".96" filter="url(#wc${seed})"/>
+      <ellipse cx="50" cy="50" rx="47" ry="45" fill="url(#wg${seed})" filter="url(#wc${seed})"/>
+      <ellipse cx="${60+seed%16}" cy="${56+seed%18}" rx="${20+seed%8}" ry="${15+seed%6}" fill="url(#wb${seed})" filter="url(#wc${seed})"/>
+      <ellipse cx="${28+seed%20}" cy="${30+seed%16}" rx="11" ry="8" style="fill:var(--surface)" opacity=".28" filter="url(#wc${seed})"/>
+      <ellipse cx="50" cy="50" rx="46.6" ry="44.6" fill="none" style="stroke:color-mix(in srgb,${pg} 78%,#000)" stroke-width="1.1" opacity=".55" filter="url(#wc${seed})"/>${dots}</svg>`;
+}
+const TOUR=(function(){
+  const KEY='tomeTour',TPROG='Am F C G';
+  let st={};try{st=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){}
+  if(!st.ch)st.ch={};
+  const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}};
+  const inst=()=>document.body.dataset.inst||'guitar';
+  const vis=n=>{if(!n)return false;const r=n.getBoundingClientRect();if(!r.width&&!r.height)return false;let p=n;while(p&&p!==document.body){if(p.hidden||(p.tagName==='DETAILS'&&!p.open&&p!==n&&!n.closest('summary')))return false;p=p.parentElement;}return getComputedStyle(n).visibility!=='hidden';};
+  const find=sel=>{if(!sel)return null;for(const x of sel.split('|')){const n=document.querySelector(x);if(n&&vis(n))return n;}return null;};
+  const go=pg=>{const t=document.querySelector(`.tome-tab[data-page="${pg}"]`);if(t&&t.getAttribute('aria-pressed')!=='true')t.click();};
+  const curSec=()=>{const s=sbSong();return s&&s.sections?s.sections[SB.sec]:null;};
+  const prog=()=>{const c=curSec();return c?String(c.prog||'').trim().replace(/\s+/g,' '):'';};
+  const playing=()=>!!document.querySelector('#sbTiles .ctile.playing');
+  const onTut=()=>SB.songId&&SB.songId===st.song;
+  function makeSong(){
+    const v={id:sbId(),name:'Verse',prog:TPROG,home:'auto',mode:'auto',loop:true},c={id:sbId(),name:'Chorus',prog:'F G Em Am',home:'auto',mode:'auto',loop:true};
+    const s={title:'Tutorial: Am F C G',created:Date.now(),updated:Date.now(),tempo:90,beats:4,sections:[v,c],form:[v.id,c.id,v.id,c.id]};
+    s.id=sbId();SB.songs.push(s);SB.songId=s.id;SB.sec=0;SB.sel=-1;SB.undo=[];sbQueueSave();sbRender();
+    st.song=s.id;save();return s;
+  }
+  function useTutSong(fresh){
+    const ex=SB.songs.find(x=>x.id===st.song);
+    if(ex&&(!fresh||(ex.sections[0]&&String(ex.sections[0].prog).trim().replace(/\s+/g,' ')===TPROG))){SB.songId=ex.id;SB.sec=0;SB.sel=-1;sbRender();return ex;}
+    return makeSong();
+  }
+  function ensureSong(){const s=sbSong();if(s&&s.sections&&s.sections.some(x=>String(x.prog||'').trim()))return s;return useTutSong(false);}
+  const CORE={id:'core',title:'The first 60 seconds',blurb:'Hear a song, change a chord, undo it, type your own.',steps:[
+    {title:'Welcome to Compose, Atlas!',text:'Atlas turns a few chords into a song you can hear, change and learn from. Let’s try it with Am F C G. It takes about a minute.',center:true,acts:[['Start the tour','start',1],['Skip for now','skip']]},
+    {page:'folio',sel:'#sbPlay',title:'Hear it',text:'This is your tutorial song. Press ▶ Play section to hear Am F C G.',wait:()=>playing(),settle:1600},
+    {page:'folio',sel:'#sbTiles .ctile:nth-child(2)',title:'Pick a chord',text:'Tap the F. You’ll hear it on its own, and the Chord lab opens underneath with ideas for it.',wait:()=>onTut()&&SB.sel===1,settle:500},
+    {page:'folio',sel:'#sbLabPanel .labcol[data-mode="replace"]',title:'Swap it',text:'These could take F’s place, best fit first. Tap one to hear how the progression changes.',enter:()=>{if(SB.labTab!=='replace'){SB.labTab='replace';sbRender();}},wait:()=>onTut()&&prog()!==TPROG,settle:700},
+    {page:'folio',sel:'#sbUndo|#mbUndo',title:'Undo',text:'Prefer the F? Tap Undo to put it back. Anything you change can be undone.',wait:()=>onTut()&&prog()===TPROG,settle:600,next:'Keep my change'},
+    {page:'folio',sel:'#sbProg',title:'Type your own',text:'You can also just type. Add Em to the end, or put :2 after a chord to hold it for two bars.',enter:s=>{s._snap=prog();},wait:s=>onTut()&&prog()!==s._snap&&document.activeElement!==$('sbProg'),settle:400},
+    {title:'That’s the core',text:'Hear it, tap a chord, swap, undo, type. The rest of the tome is in short chapters on the How-to page. Keep the tutorial song to try them on?',center:true,acts:[['Keep it and see the chapters','chapters',1],['Keep it','keep'],['Delete the song','del']]}
+  ]};
+  const CH=[
+    {id:'watch',title:'Watch it play',blurb:'See what your instrument plays, in time.',song:1,steps:[
+      {page:'folio',sel:'#pWatch',title:'Watch it play',text:'Tick Watch it play. While the music runs, Atlas shows what your instrument plays: the guitar shape sliding along the neck, the bass line note by note, or the keys lighting up.',wait:()=>$('pWatch')&&$('pWatch').checked,settle:300},
+      {page:'folio',sel:'#sbPlay',title:'Now play it',text:'Press ▶ Play section and watch.',wait:()=>playing(),settle:2500},
+      {page:'folio',sel:'#sbPlayFrom|#mbFrom',title:'Start anywhere',text:'Play from here starts at the chord you’ve selected, not the top. With Loop on, it repeats that stretch. Long-press or shift-click a second chord to set where it stops.',enter:()=>{if(SB.sel<0){SB.sel=0;sbRender();}}}]},
+    {id:'sections',title:'Sections and running order',blurb:'Verse, chorus, bridge, and the order they play in.',song:1,steps:[
+      {page:'folio',sel:'#sbTabs',title:'Sections',text:'A song is built from sections, each with its own chords. Tap another section to open it.',enter:s=>{s._sec=SB.sec;},wait:s=>SB.sec!==s._sec,settle:400},
+      {page:'folio',sel:'#sbAddSec',title:'Add a section',text:'Add a bridge, a pre-chorus or anything else from this menu.'},
+      {page:'folio',sel:'#sbForm',title:'Running order',text:'This is the order the whole song plays in. Drag the blocks to rearrange them, or use the arrows.'},
+      {page:'folio',sel:'#sbPlaySong|#mbSong',title:'Play the song',text:'Play song plays every section in running order.'}]},
+    {id:'inst',title:'Switch instrument',blurb:'The same song through other hands.',steps:[
+      {sel:'#instPick',title:'Switch instrument',text:'Switch instrument to see the same song through other hands. The music stays; the view changes.'}]},
+    {id:'explorer',title:'Chord explorer',blurb:'Any chord, everywhere it can be played.',song:1,steps:[
+      {page:'lens',sel:'#exSearch',title:'Find any chord',text:'Type any chord, even Bsus4add9 or C7(♭9,♯11), and see every way to play it.'},
+      {page:'lens',sel:'#map|#mapPiano|.tome-page[data-page="lens"] .mapbox',title:'Read the colours',text:'Each note wears a colour for its job: red is the root, blue the 3rd, green the 5th, violet the 7th.'},
+      {page:'lens',sel:'.xpick',title:'Or build one',text:'Pick a root, then a chord type. The extended and altered chords are under More chord types.'}]},
+    {id:'path',title:'Progression path',blurb:'Shapes that keep your hand in one place.',song:1,steps:[
+      {page:'prog',sel:'#progIn',title:'Progression path',text:'Name the chords, and the tome finds shapes that keep your hand where it is.'}]},
+    {id:'scales',title:'Soloing scales',blurb:'What to play over your chords.',song:1,steps:[
+      {page:'scales',sel:'#scards',title:'Soloing scales',text:'These scales fit your progression best. Tap one to see it and hear it.'}]},
+    {id:'finder',title:'Chord finder',blurb:'Name a shape you’re holding.',only:['guitar','piano'],steps:[
+      {page:'finder',sel:'#fboard|#fkeys',title:'Chord finder',text:'Holding a shape you can’t name? Tap the notes you’re pressing and the tome names it.'}]},
+    {id:'tunings',title:'Alternate tunings',blurb:'Hear your song in DADGAD, Open G and more.',only:['guitar'],song:1,steps:[
+      {page:'finder',sel:'#tuPresets',title:'Tunings',text:'Pick a tuning and hear your section reborn in it. Open strings ring wherever they can, and every page follows the new tuning.'}]},
+    {id:'export',title:'Charts and exports',blurb:'Lead sheets, MIDI and MusicXML.',song:1,steps:[
+      {page:'folio',sel:'#sbSongMenu',title:'Charts and exports',text:'The Song menu has a chord chart and lead sheet you can print, plus MIDI and MusicXML for your recording software.'}]}
+  ];
+  const avail=()=>CH.filter(c=>!c.only||c.only.includes(inst()));
+  let run=null,el=null,tick=null,tgt=null,place='',hold=0;
+  function cleanup(){document.body.classList.remove('tour-dim');clearInterval(tick);tick=null;if(tgt)tgt.classList.remove('tour-target');tgt=null;if(el){el.remove();el=null;}document.removeEventListener('keydown',onKey,true);window.removeEventListener('resize',onScroll);window.removeEventListener('scroll',onScroll);}
+  function onKey(e){if(e.key==='Escape'&&run){e.preventDefault();end(false);}}
+  function end(finished){const r=run;cleanup();run=null;if(r&&finished){if(r.tour.id==='core')st.core=1;else st.ch[r.tour.id]=1;}st.seen=1;save();renderPanel();}
+  function start(tour){
+    cleanup();run={tour,i:0};st.seen=1;save();
+    if(tour.song)ensureSong();
+    document.addEventListener('keydown',onKey,true);window.addEventListener('resize',onScroll);window.addEventListener('scroll',onScroll,{passive:true});
+    show();
+  }
+  function act(a){
+    if(a==='start'){useTutSong(true);go('folio');advance();return;}
+    if(a==='skip'){const first=run&&run.tour.id==='core'&&run.i===0;end(false);if(first&&!SB.songs.length)setTimeout(emptyCard,300);return;}
+    if(a==='keep'){end(true);return;}
+    if(a==='chapters'){end(true);openPanel();return;}
+    if(a==='del'){const id=st.song;end(true);st.song=null;save();if(id&&SB.songs.some(x=>x.id===id))sbDeleteSong(id);go('folio');
+      if(!SB.songs.length)setTimeout(emptyCard,350);
+      return;}
+  }
+  function emptyCard(){if(run)return;run={tour:{id:'empty',steps:[{page:'folio',sel:'#sbEmptyNew',title:'Your turn',text:'Every song starts here. A song holds sections: verse, chorus, bridge. Tap Start a song when you’re ready. The tour and its chapters are under Tour, at the top, any time.',acts:[['Got it','skip',1]]}]},i:0};document.addEventListener('keydown',onKey,true);window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',onScroll);show();}
+  function advance(){if(!run)return;run.i++;if(run.i>=run.tour.steps.length){end(true);return;}show();}
+  function show(){
+    if(!run)return;const step=run.tour.steps[run.i];
+    const turned=step.page&&!document.querySelector(`.tome-page[data-page="${step.page}"]:not([hidden])`);
+    if(step.page)go(step.page);
+    if(step.enter)step.enter(step);
+    hold=0;step._t0=Date.now();step._fix=0;
+    if(el)el.remove();if(tgt){tgt.classList.remove('tour-target');tgt=null;}
+    const seed=1+((run.i*29+run.tour.id.length*7)%90);
+    el=document.createElement('div');el.className='bloom tour';el.setAttribute('role','dialog');el.setAttribute('aria-live','polite');el.setAttribute('aria-label',step.title);el.tabIndex=-1;
+    const multi=run.tour.steps.length>1,num=run.tour.id==='core'?run.i:run.i+1,tot=run.tour.id==='core'?run.tour.steps.length-2:run.tour.steps.length;
+    const plbl=multi&&!step.acts?`<span class="tour-n">${run.tour.id==='core'?'':run.tour.title+' · '}${num} of ${tot}</span>`:'';
+    let acts='';
+    if(step.acts)acts=step.acts.map(([l,a,p])=>`<button type="button" class="${p?'bloom-ok':''}" data-act="${a}">${l}</button>`).join('');
+    else acts=`<button type="button" class="${step.wait?'':'bloom-ok'}" data-act="next">${step.next||(run.i===run.tour.steps.length-1?'Done':'Next')}</button><button type="button" class="tour-quit" data-act="quit">${run.tour.id==='core'?'Skip tour':'Close'}</button>`;
+    el.innerHTML=tourPaint(seed)+`<div class="bloom-body">${plbl}<h4 class="tour-h">${step.title}</h4><p>${step.text}</p><div class="bloom-acts">${acts}</div></div>`;
+    el.querySelectorAll('[data-act]').forEach(b=>b.onclick=()=>{const a=b.dataset.act;if(a==='next')advance();else if(a==='quit')end(false);else act(a);});
+    document.body.appendChild(el);
+    const me=el;setTimeout(()=>{if(el!==me)return;position(true);try{el.focus({preventScroll:true});}catch(e){}},turned?760:120);
+    document.body.classList.toggle('tour-dim',!!step.center);
+    clearInterval(tick);tick=setInterval(()=>{
+      if(!run||!el)return;const s=run.tour.steps[run.i];
+      const t=find(s.sel);if(t!==tgt)position(false);
+      if(t&&!s._fix){const age=Date.now()-s._t0;if(age>1300&&age<5000){const r=t.getBoundingClientRect(),lim=el.classList.contains('sheet')?window.innerHeight-el.offsetHeight-24:window.innerHeight;if(r.top<0||r.top>lim-40){s._fix=1;position(true);}}}
+      if(s.wait){if(s.wait(s)){hold+=250;if(hold>=(s.settle||0)){advance();}}else hold=0;}
+    },250);
+  }
+  let rafP=0;const onScroll=()=>{if(rafP)return;rafP=requestAnimationFrame(()=>{rafP=0;position(false);});};
+  function position(scroll){
+    if(!el||!run)return;const step=run.tour.steps[run.i],t=find(step.sel);
+    if(tgt&&tgt!==t)tgt.classList.remove('tour-target');tgt=t;if(t)t.classList.add('tour-target');
+    const vw=document.documentElement.clientWidth,vh=window.innerHeight,phone=vw<640;
+    let mode=phone?'sheet':(step.center||!t)?'center':'float';
+    if(mode==='float'){const r0=t.getBoundingClientRect();if(r0.height>vh*0.45)mode='corner';}
+    ['sheet','center','corner','float'].forEach(c=>el.classList.toggle(c,c===mode));
+    if(scroll&&t){
+      const r=t.getBoundingClientRect();
+      if(phone){const room=vh-el.offsetHeight-40;window.scrollTo({top:Math.max(0,r.top+window.scrollY-(r.height>room?16:Math.max(16,(room-r.height)/2))),behavior:'smooth'});}
+      else if(mode==='corner'){window.scrollTo({top:Math.max(0,r.top+window.scrollY-90),behavior:'smooth'});}
+      else t.scrollIntoView({block:'center',behavior:'smooth'});
+    }
+    if(mode!=='float'){el.style.left=el.style.top='';return;}
+    const r=t.getBoundingClientRect(),w=el.offsetWidth,h=el.offsetHeight;
+    const below=vh-r.bottom>h+24||r.top<h+24;
+    el.style.left=Math.max(12,Math.min(vw-w-12,r.left+Math.min(40,r.width/2)-30))+'px';
+    el.style.top=Math.max(8,Math.min(vh-h-8,below?r.bottom+14:r.top-h-14))+'px';
+  }
+  /* chapter list on the How-to page */
+  function renderPanel(){
+    const p=$('tourList');if(!p)return;
+    const rows=[CORE].concat(avail()).map(c=>{const done=c.id==='core'?st.core:st.ch[c.id];
+      return `<li class="tourrow${done?' done':''}"><button type="button" class="btn${c.id==='core'?' primary':''}" data-tour="${c.id}">${done?'Again':'Start'}</button><span><b>${c.title}</b> <span class="tourblurb">${c.blurb}</span></span><span class="tourtick" aria-label="${done?'Done':'Not done yet'}">${done?'✓':''}</span></li>`;}).join('');
+    p.innerHTML=rows;
+    const n=avail().filter(c=>st.ch[c.id]).length;$('tourCount').textContent=`${n} of ${avail().length} chapters done`;
+    p.querySelectorAll('[data-tour]').forEach(b=>b.onclick=()=>{const id=b.dataset.tour;if(id==='core'){start(CORE);run.i=0;act('start');}else start(CH.find(c=>c.id===id));});
+  }
+  function openPanel(){go('practice');setTimeout(()=>{const p=$('tourPanel');if(p){p.scrollIntoView({block:'start',behavior:'smooth'});p.classList.add('tour-flash');setTimeout(()=>p.classList.remove('tour-flash'),1600);}},400);}
+  renderPanel();
+  new MutationObserver(renderPanel).observe(document.body,{attributes:true,attributeFilter:['data-inst']});
+  {const b=$('tourBtn');if(b)b.onclick=openPanel;}
+  if(window.TOME_FIRST_RUN&&!window.TOME_NO_AUTOTOUR&&!st.seen){
+    const wait=()=>{if(run)return;if(document.querySelector('.instmodal')){setTimeout(wait,600);return;}setTimeout(()=>{if(!run&&!st.seen)start(CORE);},700);};
+    setTimeout(wait,900);
+  }
+  return {start:id=>start(id==='core'?CORE:CH.find(c=>c.id===id)),state:()=>({run:run&&{tour:run.tour.id,i:run.i},st:JSON.parse(JSON.stringify(st))}),act,next:advance};
+})();
+
+window.AtlasTour=TOUR;
 const WATCH={on:false,inst:null,lastBass:null,hand:3};
 try{WATCH.on=localStorage.getItem('tomeWatch')==='1';}catch(e){}
 function watchBoard(n,names){
@@ -4018,7 +4334,7 @@ function watchInit(){
   if(INST==='piano'){box.innerHTML='<div class="wkeys" id="wKeys"></div>';$('wKeys').innerHTML=keyboardSVG(36,84,new Map(),{ww:20,wh:92});}
   else{const b=INST==='bass'?watchBoard(4,BASS_NAMES):watchBoard(6,SNAMES);let svg=b.svg;const cap=INST==='guitar'?capoNow():0;if(cap){const x=40+(cap-1)*50+9;svg=svg.replace(/viewBox="-18 0 828 (\d+)"/,(m,h)=>`viewBox="-18 0 828 ${+h+14}"`);svg=svg.replace('</svg>',`<rect x="${x-6}" y="6" width="12" height="${b.Y(0)-b.Y(5)+24}" rx="5" fill="var(--ink)" opacity=".55"/><text x="${x}" y="${b.Y(0)+44}" text-anchor="middle" font-size="11" fill="var(--muted)">capo ${cap}</text></svg>`);}box.innerHTML=svg;WATCH.geo=b;}
   const off=(INST==='guitar'&&!$('pGtr').checked)||(INST==='bass'&&!$('pBass').checked)||(INST==='piano'&&!$('pPiano').checked);
-  if(off){note.hidden=false;note.textContent=INST==='bass'?'Bass is not ticked in Band playback, so there is no bass line to show.':`${INST==='piano'?'Piano':'Guitar'} is not ticked in Band playback: this is what it would play.`;}
+  if(off){note.hidden=false;note.textContent=INST==='bass'?'Bass is not ticked under Band in the playback options, so there is no bass line to show.':`${INST==='piano'?'Piano':'Guitar'} is not ticked under Band in the playback options: this is what it would play.`;}
 }
 function watchChord(x){
   if(!WATCH.on||!PL.on)return;if(WATCH.inst!==INST)watchInit();
@@ -4608,74 +4924,7 @@ update();
   new MutationObserver(()=>requestAnimationFrame(run)).observe(document.getElementById('tomeBook'),{attributes:true,subtree:true,attributeFilter:['hidden']});
   run();
 })();
-/* ---- First-use hints: watercolour blooms that appear beside the part of the page in use ---- */
-(function(){
-  if(typeof document==='undefined')return;
-  const HINTS=[
-    {page:'folio',sel:'#sbEmptyNew',text:'Every song starts here. A song holds sections: verse, chorus, bridge. Tap to begin your first.'},
-    {page:'folio',sel:'#sbProg',text:'Write chords the way you’d say them: Am F C G. Add :2 after a chord to hold it for two bars.'},
-    {page:'folio',sel:'#sbTiles .ctile',text:'Tap any chord to hear it. The chord lab below suggests what else could stand in its place.'},
-    {page:'folio',sel:'#sbPlay',text:'Press play to hear the section. Choose who plays in the Band box: guitar, bass, or both.'},
-    {page:'folio',sel:'#pWatch',text:'Tick Watch it play to see what your instrument plays as it plays: the guitar shape sliding along the neck, the bass line note by note, or the keys lighting up.'},
-    {page:'folio',sel:'#sbPlayFrom',text:'Play from the chord you selected, not from the top. With Loop on it repeats just that stretch. Long-press or shift-click a second chord to set where it stops. Change a chord while it loops and the next pass plays the new one.'},
-    {page:'folio',sel:'#instPick',text:'Switch instrument to see the same song through other hands. The music stays; the view changes.'},
-    {page:'lens',sel:'#exSearch',text:'Type any chord, even Bsus4add9 or C7(♭9,♯11), and see every way to play it.'},
-    {page:'lens',sel:'#map',text:'Each note wears a colour for its job: red is the root, blue the 3rd, green the 5th, violet the 7th.'},
-    {page:'prog',sel:'#progIn',text:'Name the chords, and the tome finds shapes that keep your hand where it is.'},
-    {page:'scales',sel:'#scards',text:'These scales fit your progression best. Tap one to see it on the neck and hear it.'},
-    {page:'finder',sel:'#fboard',text:'Holding a shape you can’t name? Tap the frets you’re pressing and the tome will name it.'},
-    {page:'finder',sel:'#tuPresets',text:'Pick a tuning and hear your section reborn in it. Open strings ring wherever they can.'}
-  ];
-  let seen={};try{seen=JSON.parse(localStorage.getItem('tomeHints')||'{}')||{};}catch(e){}
-  const save=()=>{try{localStorage.setItem('tomeHints',JSON.stringify(seen));}catch(e){}};
-  let cur=null,el=null,follow=null;
-  const visible=n=>{if(!n)return false;const r=n.getBoundingClientRect();if(!r.width&&!r.height)return false;let p=n;while(p){if(p.hidden)return false;p=p.parentElement;}return getComputedStyle(n).visibility!=='hidden';};
-  function pageNow(){const p=[...document.querySelectorAll('.tome-page')].find(x=>!x.hidden);return p&&p.dataset.page;}
-  function close(){if(el){const e=el;e.classList.add('bloom-out');setTimeout(()=>e.remove(),420);}el=null;cur=null;if(follow){document.removeEventListener('mousemove',follow);follow=null;}}
-  function nextFor(page){if(seen.__off)return null;return HINTS.find((h,i)=>h.page===page&&!seen[i]&&visible(document.querySelector(h.sel)));}
-  function show(h){
-    close();const i=HINTS.indexOf(h),t=document.querySelector(h.sel);if(!t)return;cur=h;
-    const seed=1+Math.floor(Math.random()*90);
-    el=document.createElement('div');el.className='bloom';el.setAttribute('role','dialog');el.setAttribute('aria-label','Hint');
-    const PIGS=[['#2F5BE0','#7B4FD6'],['#E5432F','#F29A1D'],['#12A07A','#2F8FD8'],['#E8336D','#8A4FD1'],['#F2A516','#E5432F'],['#14A3BC','#2F5BE0'],['#8A4FD1','#E8336D']];
-    const [pg,pg2]=PIGS[3],rnd=k=>((seed*37+k*53)%100)/100;
-    const dots=[0,1,2,3].map(k=>{const a=rnd(k)*6.283,r=50+6+rnd(k+7)*8;return `<circle cx="${(50+Math.cos(a)*r*0.98).toFixed(1)}" cy="${(50+Math.sin(a)*r*0.92).toFixed(1)}" r="${(0.6+rnd(k+3)*1.6).toFixed(2)}" style="fill:${k%2?pg2:pg}" opacity=".55"/>`;}).join('');
-    el.innerHTML=`<svg class="bloom-paint" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><defs>
-      <filter id="wc${seed}" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="3" seed="${seed}" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="8" xChannelSelector="R" yChannelSelector="G" result="d"/><feGaussianBlur in="d" stdDeviation="0.3"/></filter>
-      <radialGradient id="wg${seed}" cx="${42+seed%12}%" cy="${40+seed%14}%" r="64%"><stop offset="0" stop-color="${pg}" stop-opacity=".10"/><stop offset=".55" stop-color="${pg}" stop-opacity=".22"/><stop offset=".82" stop-color="${pg}" stop-opacity=".40"/><stop offset=".955" stop-color="${pg}" stop-opacity=".78"/><stop offset="1" stop-color="${pg}" stop-opacity="0"/></radialGradient>
-      <radialGradient id="wb${seed}"><stop offset="0" stop-color="${pg2}" stop-opacity=".42"/><stop offset=".7" stop-color="${pg2}" stop-opacity=".22"/><stop offset="1" stop-color="${pg2}" stop-opacity="0"/></radialGradient></defs>
-      <ellipse cx="50" cy="50" rx="47" ry="45" style="fill:color-mix(in srgb,${pg} 14%,var(--surface))" opacity=".96" filter="url(#wc${seed})"/>
-      <ellipse cx="50" cy="50" rx="47" ry="45" fill="url(#wg${seed})" filter="url(#wc${seed})"/>
-      <ellipse cx="${60+seed%16}" cy="${56+seed%18}" rx="${20+seed%8}" ry="${15+seed%6}" fill="url(#wb${seed})" filter="url(#wc${seed})"/>
-      <ellipse cx="${28+seed%20}" cy="${30+seed%16}" rx="11" ry="8" style="fill:var(--surface)" opacity=".28" filter="url(#wc${seed})"/>
-      <ellipse cx="50" cy="50" rx="46.6" ry="44.6" fill="none" style="stroke:color-mix(in srgb,${pg} 78%,#000)" stroke-width="1.1" opacity=".55" filter="url(#wc${seed})"/>${dots}</svg>
-      <div class="bloom-body"><p>${h.text}</p><div class="bloom-acts"><button type="button" class="bloom-ok">Got it</button><button type="button" class="bloom-off">No more hints</button></div></div>`;
-    document.body.appendChild(el);
-    const r=t.getBoundingClientRect(),vw=document.documentElement.clientWidth,w=Math.min(330,vw-24);el.style.width=w+'px';
-    const hgt=el.offsetHeight,below=window.innerHeight-r.bottom>hgt+20||r.top<hgt+20;
-    const left=Math.max(12,Math.min(vw-w-12,r.left+Math.min(40,r.width/2)-30));
-    const top=below?r.bottom+10:r.top-hgt-10;
-    el.style.left=left+'px';el.style.top=(top+window.scrollY)+'px';
-    t.classList.add('bloom-target');setTimeout(()=>t.classList.remove('bloom-target'),2400);
-    {const me=el,onT=()=>{if(el!==me)return;seen[i]=1;save();close();};t.addEventListener('pointerdown',onT,{once:true});t.addEventListener('focusin',onT,{once:true});}
-    el.querySelector('.bloom-ok').onclick=()=>{seen[i]=1;save();const page=pageNow();close();setTimeout(()=>{const n=nextFor(page);if(n)show(n);},450);};
-    el.querySelector('.bloom-off').onclick=()=>{seen.__off=1;save();close();};
-    if(matchMedia('(hover:hover) and (pointer:fine)').matches&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
-      follow=e=>{if(!el)return;const b=el.getBoundingClientRect(),cx=b.left+b.width/2,cy=b.top+b.height/2,dx=e.clientX-cx,dy=e.clientY-cy,d=Math.hypot(dx,dy);
-        if(d>420){el.style.setProperty('--fx','0px');el.style.setProperty('--fy','0px');return;}const k=Math.min(14,d*0.06)/Math.max(d,1);el.style.setProperty('--fx',(dx*k).toFixed(1)+'px');el.style.setProperty('--fy',(dy*k).toFixed(1)+'px');};
-      document.addEventListener('mousemove',follow);
-    }
-  }
-  function maybe(){if(el)return;if(document.querySelector('.instmodal')){clearTimeout(maybe.t);maybe.t=setTimeout(maybe,800);return;}const n=nextFor(pageNow());if(n)show(n);}
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&el)close();});
-  const pages=[...document.querySelectorAll('.tome-page')];
-  const mo=new MutationObserver(()=>{if(el&&cur&&cur.page!==pageNow())close();clearTimeout(mo.t);mo.t=setTimeout(maybe,900);});
-  pages.forEach(p=>mo.observe(p,{attributes:true,attributeFilter:['hidden']}));
-  const btn=document.getElementById('hintsBtn');
-  if(btn)btn.onclick=()=>{seen={};save();close();setTimeout(maybe,200);};
-  setTimeout(maybe,1400);
-  document.addEventListener('click',e=>{if(el&&!el.contains(e.target)){clearTimeout(mo.t);mo.t=setTimeout(()=>{if(!el)maybe();},1200);}},true);
-})();
+/* (first-use hints now live in the guided tour above) */
 
 </script>
 
